@@ -23,9 +23,8 @@ for (let i = 0; i < select.length; i++) {
     materials.forEach(function (e) {
         const name = e.name;
         const el = document.createElement("option");
-        el.textContent = name;
         el.value = name;
-        select[i].appendChild(el);
+        document.getElementById("whatListSource").appendChild(el);
     });
 }
 
@@ -39,12 +38,12 @@ materials.sort(function (a, b) {
 
 for (let i = 0; i < materials.length; i++) {
     //source headings
-    if (i === 0 || i > 0 && materials[i].source != materials[i - 1].source) {
+    if (i === 0 || i > 0 && materials[i].source !== materials[i - 1].source) {
         document.getElementById("needs").insertAdjacentHTML("beforeend", "<h3 class='hidden center'><span class='mat' data-source='" + materials[i].source + "' />" + materials[i].source + "</h3>");
         document.getElementById("inventory").insertAdjacentHTML("beforeend", "<h3 class='hidden center'><span class='inv' data-source='" + materials[i].source + "' />" + materials[i].source + "</h3>");
     }
 
-    let invItem = invArray.find(item => item.name == materials[i].name);
+    let invItem = invArray.find(item => item.name === materials[i].name);
     let itemQuant = invItem ? invItem.quantity : 0;
 
     //build inventory div
@@ -639,7 +638,7 @@ function populateBoostGrid() {
             techLab: false }];
 
     boostElements.forEach(function (e) {
-        let elementTechLab = '<div class="boost-techLab"></div>'
+        let elementTechLab = '<div class="boost-techLab"></div>';
         if (e.techLab === true){
             elementTechLab = '<div class="boost-techLab">\n' +
                 '\t\t\t\t\t<div class="onoffswitch">\n' +
@@ -654,5 +653,3 @@ function populateBoostGrid() {
 
     });
 }
-
-window.onloa

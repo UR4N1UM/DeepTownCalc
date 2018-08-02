@@ -62,15 +62,20 @@ nested grid stuff
  .item-needs {
 	display: grid;
 	grid-template-columns: 9fr 1fr;
-} 
+}
+
+ .item, .quantity {
+	 display: flex;
+	 justify-content: flex-end;
+	 flex-wrap: wrap;
+	 grid-column: 1 / 10;
+ }
 
 .item {
-	grid-column: 1 / 10;
 	grid-row: 1;
 }
 
 .quantity {
-	grid-column: 1 / 10;
 	grid-row: 2;
 }
 

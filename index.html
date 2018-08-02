@@ -29,8 +29,8 @@
 
 		<form id="form">
 			<div class="item-needs">
-				<li class="item"><label>Item </label><select class="what" placeholder="What do you want to build?" name="stuff" oninput="submitButton()"></select></li>
-				<li class="quantity"><label>Quantity </label><input type="number" min="0" class="how-many" value="100" oninput="submitButton()"></li>
+				<div class="item"><label>Item </label><input list="whatListSource" class="what" placeholder="What do you want to build?" name="stuff" onchange="submitButton()"></div>
+				<div class="quantity"><label>Quantity </label><input type="number" min="0" class="how-many" value="100" oninput="submitButton()"></div>
 			</div>
 			<li><button class="more" type="button">Make More Stuff</button></li>
 			<li><label>Mines </label><input type="number" min="0" id="mines" value="20" oninput="submitButton()"></li>
@@ -41,7 +41,8 @@
 				<input id="slider" type="range" min="0" max="100" value="0" oninput="showValue(this.value)" />
 				<span id="charcoal">0</span>
 			</li>
-			
+
+			<datalist id="whatListSource"></datalist>
 		</form>
 
 		<div id="mine-results">
