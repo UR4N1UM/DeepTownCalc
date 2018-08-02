@@ -10,11 +10,16 @@
 	<script type="text/javascript" src="dtc.js" defer></script>
 
 </head>
-<body>
+<body onload="populateBoostGrid()">
 	<div class="grid">
 
 		<h1>Deep Town Calc</h1>
 		<div id="info">
+			<div class="boost-grid" id="boost-grid">
+				<div class="boost-desc"></div>
+				<div class="boost-bot">Bots</div>
+				<div class="boost-techLab">Tech Lab</div>
+			</div>
 			<p>DTC will help you make stuff faster!  You enter what you want to make, how much you want, and how many mines you have.  It will tell you where to place your mines, as well as how many of each material (and, if applicable, how long) it will require.</p>
 			<p>In the "Everything You Need" list, the number in [brackets] represents the number of assigned stations of that type.  You can add smelting, crafting, etc. stations by clicking the plus sign (+).  To help indicate bottlenecks, the longest time in the list will appear in <span class="bottleneck">red</span>.</p>
 			<p>In the last column, enter your current inventory of the materials you need.</p>

@@ -445,6 +445,15 @@ function displayNeeds() {
         }
     });
 
+    const sourceBoost = {
+        "mining": Math.pow(5/6, document.getElementById("miningBotBoost").value) / Math.pow(2, document.getElementById("miningTechLabBoost").checked),
+        "smelting": Math.pow(5/6, document.getElementById("smeltingBotBoost").value) / Math.pow(2, document.getElementById("smeltingTechLabBoost").checked),
+        "crafting": Math.pow(5/6, document.getElementById("craftingBotBoost").value) / Math.pow(2, document.getElementById("craftingTechLabBoost").checked),
+        "chemistry": Math.pow(5/6, document.getElementById("chemistryBotBoost").value) / Math.pow(2, document.getElementById("chemistryTechLabBoost").checked),
+        "jewelCrafting": Math.pow(5/6, document.getElementById("jewelCraftingBotBoost").value),
+        "greenhouse": Math.pow(5/6, document.getElementById("greenhouseBotBoost").value),
+    };
+
     const matDiv = document.getElementsByClassName("mat");
     const invDiv = document.getElementsByClassName("inv");
 
@@ -454,7 +463,12 @@ function displayNeeds() {
             if (needsList[i].name === matDiv[j].dataset.name) {
 
                 const bottleneck = Math.max.apply(Math, needsList.map(function (e) {
-                    return Math.ceil(parseInt(e.batches) * parseInt(e.time) / e.stations);
+                    if (sourceBoost[e.source] === undefined) {
+                        return Math.ceil(parseInt(e.batches) * parseInt(e.time) / e.stations);
+                    }
+                    else {
+                        return Math.ceil(parseInt(e.batches) * parseInt(e.time) / e.stations * sourceBoost[e.source])
+                    }
                 }));
 
                 const qu = Math.ceil(needsList[i].quantity / needsList[i].stations).toLocaleString("en-us");
@@ -470,16 +484,20 @@ function displayNeeds() {
                     const time = [0, 0, 0, 0];
                     let ti;
                     let timeStr = "";
+                    let boostFactor;
 
                     if (!noTime.includes(needsList[i].source)) {
 
-                        ti = Math.ceil(needsList[i].time / needsList[i].stations * needsList[i].batches);
+                        if (sourceBoost[needsList[i].source] !== undefined) {boostFactor = sourceBoost[needsList[i].source]}
+                        else {boostFactor = 1;}
+                        ti = Math.ceil(needsList[i].time / needsList[i].stations * needsList[i].batches * boostFactor);
+
                         if (ti === bottleneck) {
                             matDiv[j].classList.add("bottleneck");
                         }
 
-                        if (ti < needsList[i].time) {
-                            ti = needsList[i].time;
+                        if (ti < needsList[i].time * boostFactor) {
+                            ti = needsList[i].time * boostFactor;
                         }
 
                         if (ti >= 86400) {
@@ -592,3 +610,49 @@ function hide() {
     document.getElementById("hide").classList.add("hidden");
     submitButton();
 }
+
+function populateBoostGrid() {
+    const boostElements = [
+        {
+            source: "mining",
+            description: "Mines",
+            techLab: true
+        }, {
+            source: "smelting",
+            description: "Smelting",
+            techLab: true
+        }, {
+            source: "crafting",
+            description: "Crafting",
+            techLab: true
+        }, {
+            source: "chemistry",
+            description: "Chemistry",
+            techLab: true
+        }, {
+            source: "jewelCrafting",
+            description: "Jewel Crafting",
+            techLab: false
+        }, {
+            source: "greenhouse",
+            description: "Greenhouse",
+            techLab: false }];
+
+    boostElements.forEach(function (e) {
+        let elementTechLab = '<div class="boost-techLab"></div>'
+        if (e.techLab === true){
+            elementTechLab = '<div class="boost-techLab">\n' +
+                '\t\t\t\t\t<div class="onoffswitch">\n' +
+                '\t\t\t\t\t\t<input type="checkbox" class="onoffswitch-checkbox" onchange="submitButton();" id="' + e.source + 'TechLabBoost">\n' +
+                '\t\t\t\t\t\t<label class="onoffswitch-label" for="' + e.source + 'TechLabBoost"></label>\n' +
+                '\t\t\t\t\t</div>\n' +
+                '\t\t\t\t</div>'
+        }
+        document.getElementById("boost-grid").insertAdjacentHTML("beforeend", '<div class="boost-desc" >' + e.description + '</div>');
+        document.getElementById("boost-grid").insertAdjacentHTML("beforeend", '<div class="boost-bot"><input type="number" id="' + e.source + 'BotBoost" placeholder="0" value="0" min="0" onchange="submitButton()"></div>');
+        document.getElementById("boost-grid").insertAdjacentHTML("beforeend", elementTechLab);
+
+    });
+}
+
+window.onloa
