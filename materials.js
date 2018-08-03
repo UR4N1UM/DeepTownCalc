@@ -686,7 +686,13 @@ const materials  = [
     }, {
         name: "oxygen",
         source: "hydrogen",
-        value: "800"
+        value: "800",
+        time: "900",
+        madeBy:
+            {
+                thing: "hydrogen",
+                quantity: "2"
+            }
     }, {
         name: "polishedAmber",
         source: "jewelCrafting",
