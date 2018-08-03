@@ -176,12 +176,17 @@ function makeThese(stuff, quant) {
     if (material.hasOwnProperty("madeBy")){
         material.quantity = quant;
         const matStation = document.getElementsByClassName("mat");
+        // grab amount of stations from main product.
         const matStat = Array.prototype.filter.call(matStation, function (e) {
             return e.dataset.name === material.madeBy["thing"];
         })[0];
-
         material.stations = matStat.nextElementSibling.nextElementSibling.innerHTML;
-        //this is to calculate bottleneck
+        // set stations of byproduct to 0
+        const byProdStat = Array.prototype.filter.call(matStation, function (e) {
+            return e.dataset.name === material.name;
+        })[0];
+        byProdStat.nextElementSibling.nextElementSibling.innerHTML = "N/A";
+        // this is to calculate bottleneck
         if (!material.hasOwnProperty("time")) {
             material.time = 0;
         }
