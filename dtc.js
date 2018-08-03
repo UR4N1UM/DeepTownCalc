@@ -72,7 +72,7 @@ for (let i = 0; i < materials.length; i++) {
     }
 
     minus[minus.length - 1].addEventListener("click", function () {
-        if (num.innerHTML > 1) {
+        if (num.innerHTML > 0) {
             num.innerHTML--;
             submitButton();
         }
@@ -515,6 +515,7 @@ function displayNeeds() {
             if (needsList[i].name === matDiv[j].dataset.name) {
 
                 const bottleneck = Math.max.apply(Math, needsList.map(function (e) {
+                    if (e.stations === "0") {return 1;}
                     if (sourceBoost[e.source] === undefined) {
                         return Math.ceil(parseInt(e.batches) * parseInt(e.time) / e.stations);
                     }
@@ -523,7 +524,9 @@ function displayNeeds() {
                     }
                 }));
 
-                const qu = Math.ceil(needsList[i].quantity / needsList[i].stations).toLocaleString("en-us");
+                let qu = 0;
+                if (needsList.stations > 0){ qu = Math.ceil(needsList[i].quantity / needsList[i].stations).toLocaleString("en-us");}
+                else {qu = needsList[i].quantity}
                 const st = needsList[i].name;
 
                 matDiv[j].classList.remove("bottleneck");
@@ -544,40 +547,43 @@ function displayNeeds() {
                         else {boostFactor = 1;}
                         ti = Math.ceil(needsList[i].time / needsList[i].stations * needsList[i].batches * boostFactor);
 
-                        if (ti === bottleneck) {
-                            matDiv[j].classList.add("bottleneck");
-                        }
+                        if (needsList[i].stations > 0) {
 
-                        if (ti < needsList[i].time * boostFactor) {
-                            ti = needsList[i].time * boostFactor;
-                        }
-
-                        if (ti >= 86400) {
-                            time[0] = Math.floor(ti / 86400);
-                            ti -= time[0] * 86400;
-                        }
-                        if (ti >= 3600) {
-                            time[1] = Math.floor(ti / 3600);
-                            ti -= time[1] * 3600;
-                        }
-                        if (ti >= 60) {
-                            time[2] = Math.floor(ti / 60);
-                            ti -= time[2] * 60;
-                        }
-                        time[3] = ti;
-
-                        time.forEach(function (value, index, time) {
-                            if (value === 0) {
-                                time[index] = "00";
+                            if (ti === bottleneck) {
+                                matDiv[j].classList.add("bottleneck");
                             }
-                        });
 
-                        if (time[0] > 0) {
-                            timeStr = "&nbsp;- " + time[0] + ":" + time[1] + ":" + time[2] + ":" + time[3];
-                        } else if (time[1] > 0) {
-                            timeStr = "&nbsp;- " + time[1] + ":" + time[2] + ":" + time[3];
-                        } else {
-                            timeStr = "&nbsp;- " + time[2] + ":" + time[3];
+                            if (ti < needsList[i].time * boostFactor) {
+                                ti = needsList[i].time * boostFactor;
+                            }
+
+                            if (ti >= 86400) {
+                                time[0] = Math.floor(ti / 86400);
+                                ti -= time[0] * 86400;
+                            }
+                            if (ti >= 3600) {
+                                time[1] = Math.floor(ti / 3600);
+                                ti -= time[1] * 3600;
+                            }
+                            if (ti >= 60) {
+                                time[2] = Math.floor(ti / 60);
+                                ti -= time[2] * 60;
+                            }
+                            time[3] = ti;
+
+                            time.forEach(function (value, index, time) {
+                                if (value === 0) {
+                                    time[index] = "00";
+                                }
+                            });
+
+                            if (time[0] > 0) {
+                                timeStr = "&nbsp;- " + time[0] + ":" + time[1] + ":" + time[2] + ":" + time[3];
+                            } else if (time[1] > 0) {
+                                timeStr = "&nbsp;- " + time[1] + ":" + time[2] + ":" + time[3];
+                            } else {
+                                timeStr = "&nbsp;- " + time[2] + ":" + time[3];
+                            }
                         }
                     }
                     matDiv[j].innerHTML = timeStr;
@@ -705,4 +711,5 @@ function populateBoostGrid() {
         document.getElementById("boost-grid").insertAdjacentHTML("beforeend", elementTechLab);
 
     });
+    document.getElementById("miningBotBoost").disabled = true;
 }
