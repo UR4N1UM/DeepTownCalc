@@ -168,9 +168,56 @@ function makeThese(stuff, quant) {
         }
     });
 
-    const material = materials.filter(function (e) {
+    let material = materials.filter(function (e) {
         return e.name === stuff;
     })[0];
+
+    // checks if material is a byproduct
+    if (material.hasOwnProperty("madeBy")){
+        material.quantity = quant;
+        const matStation = document.getElementsByClassName("mat");
+        const matStat = Array.prototype.filter.call(matStation, function (e) {
+            return e.dataset.name === material.madeBy["thing"];
+        })[0];
+
+        material.stations = matStat.nextElementSibling.nextElementSibling.innerHTML;
+        //this is to calculate bottleneck
+        if (!material.hasOwnProperty("time")) {
+            material.time = 0;
+        }
+
+        if (material.hasOwnProperty("batch")) {
+            material.batches = Math.ceil(quant / material.batch);
+        } else {
+            material.batches = quant;
+        }
+        // adds product to needsList
+        if (quant > 0) {
+            if (needsList.length === 0) {
+                needsList.push(Object.assign({}, material));
+            } else {
+                let matchCounter = 0;
+                for (let i = needsList.length - 1; i >= 0; i--) {
+                    if (needsList[i].name === material.name) {
+                        needsList[i].quantity = parseInt(needsList[i].quantity) + parseInt(quant);
+                        needsList[i].batches = parseInt(needsList[i].batches) + parseInt(material.batches);
+                        break;
+                    } else {
+                        matchCounter++;
+                        if (matchCounter === needsList.length) {
+                            needsList.push(Object.assign({}, material));
+                        }
+                    }
+                }
+            }
+        }
+
+        // Byproduct added to needslist. change into the product that needs to be made
+        quant = quant * material.madeBy["quantity"]; // adjust need to suit quantity
+        material = materials.filter(function (e) {
+            return e.name === material.madeBy["thing"]
+        })[0];
+    }
 
     //build array of all needs
 
@@ -452,6 +499,7 @@ function displayNeeds() {
         "jewelCrafting": Math.pow(5/6, document.getElementById("jewelCraftingBotBoost").value),
         "greenhouse": Math.pow(5/6, document.getElementById("greenhouseBotBoost").value),
     };
+    sourceBoost["hydrogen"] = sourceBoost["chemistry"];
 
     const matDiv = document.getElementsByClassName("mat");
     const invDiv = document.getElementsByClassName("inv");
