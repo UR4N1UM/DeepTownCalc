@@ -58,6 +58,28 @@ const materials  = [
         name: "helium",
         source: "mining"
     }, {
+        name: "lutetiumOre",
+        source: "mining"
+    }, {
+        name: "cosmicIce",
+        source: "mining"
+    }, {
+        name: "sodiumChloride",
+        source: "mining"
+    }, {
+        name: "dnaFloraCapsule",
+        source: "mining"
+    }, {
+        name: "sapphireCrystalGlass",
+        source: "jewelCrafting",
+        time : "120",
+        toMake: [
+            {
+                thing: "polishedSapphire",
+                quantity: "10"
+            }
+        ]
+    }, {
         name: "uraniumRod",
         source: "enrichment",
         time: "600",
