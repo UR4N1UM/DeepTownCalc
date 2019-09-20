@@ -70,6 +70,39 @@ const materials  = [
         name: "dnaFloraCapsule",
         source: "mining"
     }, {
+        name: "lutetium",
+        source: "chemistry",
+        time: "600",
+        toMake: [
+            {
+                thing: "sulfuricAcid",
+                quantity: "1"
+            }, {
+                thing: "lutetiumOre",
+                quantity: "20"
+            }
+        ]
+    }, {
+        name: "lutetiumBar",
+        source: "smelting",
+        time: "60",
+        toMake: [
+            {
+                thing: "lutetium",
+                quantity: "5"
+            }
+        ]
+    }, {
+        name: "chlorine",
+        source: "chemistry",
+        time: "180",
+        toMake: [
+            {
+                thing: "sodiumChloride",
+                quantity: "1"
+            }
+        ]
+    }, {
         name: "sapphireCrystalGlass",
         source: "jewelCrafting",
         time : "120",
