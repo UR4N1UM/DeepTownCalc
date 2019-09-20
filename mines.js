@@ -906,9 +906,11 @@ const mines = [
     }, {
         area: "119",
         iron:"100.00"
-    }, {
+    }/* removed: area not accessible
+     , {
         area: "120",
         iron:"50.00",
         coal:"50.00"
     }
+    */
 ];
