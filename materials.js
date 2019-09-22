@@ -70,6 +70,83 @@ const materials  = [
         name: "dnaFloraCapsule",
         source: "mining"
     }, {
+        name: "rocketTypeA",
+        source: "crafting",
+        time: "1800",
+        toMake: [
+            {
+                thing: "steelPlate",
+                quantity: "50"
+            }, {
+                thing: "opticFiber",
+                quantity: "10"
+            }, {
+                thing: "solarPanel",
+                quantity: "1"
+            }
+        ]
+    }, {
+        name: "rocketTypeB",
+        source: "crafting",
+        time: "1800",
+        toMake: [
+            {
+                thing: "titaniumBar",
+                quantity: "10"
+            }, {
+                thing: "insulatedWire",
+                quantity: "100"
+            }, {
+                thing: "moonstone",
+                quantity: "1"
+            }
+        ]
+    }, {
+        name: "rocketTypeC",
+        source: "crafting",
+        time: "1800",
+        toMake: [
+            {
+                thing: "magniteBar",
+                quantity: "1"
+            }, {
+                thing: "sapphireCrystalGlass",
+                quantity: "100"
+            }, {
+                thing: "redBeryl",
+                quantity: "1"
+            }
+        ]
+    }, {
+        name: "chipset",
+        source: "crafting",
+        time: "60",
+        toMake: [
+            {
+                thing: "silverBar",
+                quantity: "1"
+            }, {
+                thing: "circuit",
+                quantity: "3"
+            }, {
+                thing: "hydrochloricAcid",
+                quantity: "1"
+            }
+        ]
+    }, {
+        name: "hydrochloricAcid",
+        source: "chemistry",
+        time: "120",
+        toMake: [
+            {
+                thing: "sulfuricAcid",
+                quantity: "1"
+            }, {
+                thing: "sodiumChloride",
+                quantity: "20"
+            }
+        ]
+    }, {
         name: "lutetium",
         source: "chemistry",
         time: "600",
