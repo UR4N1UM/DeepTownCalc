@@ -113,6 +113,22 @@ const materials  = [
             }
         ]
     }, {
+        name: "lcdMonitor",
+        source: "crafting",
+        time: "300",
+        toMake: [
+            {
+                thing:"insulatedWire",
+                quantity:"20"
+            }, {
+                thing:"silicon",
+                quantity:"5"
+            }, {
+                thing:"sapphireCrystalGlass",
+                quantity:"5"
+            }
+        ]
+    }, {
         name: "uraniumRod",
         source: "enrichment",
         time: "600",
